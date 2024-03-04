@@ -6,6 +6,8 @@ abstract class SplashLocalDataSource {
   Future<void> setIsFirstTime();
 
   Future<bool> getIsFirstTime();
+
+  Future<bool> isLogin();
 }
 
 class SplashLocalDataSourceImpl implements SplashLocalDataSource {
@@ -14,7 +16,7 @@ class SplashLocalDataSourceImpl implements SplashLocalDataSource {
     try {
       if (bool.tryParse(await CacheHelper.getValue(
               key: CacheKeys.isFirstTime, nullHandler: 'true')) ??
-          false) {
+          true) {
         await CacheHelper.setValue(key: CacheKeys.isFirstTime, value: 'false');
       }
     } on Exception {
@@ -25,8 +27,19 @@ class SplashLocalDataSourceImpl implements SplashLocalDataSource {
   @override
   Future<bool> getIsFirstTime() async {
     try {
-      return bool.tryParse(
-              await CacheHelper.getValue(key: CacheKeys.isFirstTime)) ??
+      return bool.tryParse(await CacheHelper.getValue(
+              key: CacheKeys.isFirstTime, nullHandler: 'true')) ??
+          true;
+    } on Exception {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<bool> isLogin() async {
+    try {
+      return bool.tryParse(await CacheHelper.getValue(
+              key: CacheKeys.isLogin, nullHandler: 'false')) ??
           true;
     } on Exception {
       throw CacheException();

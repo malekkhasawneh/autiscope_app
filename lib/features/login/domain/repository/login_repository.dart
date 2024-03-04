@@ -8,5 +8,8 @@ abstract class LoginRepository {
 
   Future<Either<Failures, void>> setUserInfo({required User user});
 
-  Future<Either<Failures, User>> getUserInfo();
+  Future<Either<Failures, String>> getUserInfo();
+
+  Future<Either<Failures, void>> setIsLogin();
+
 }

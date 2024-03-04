@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autiscope_app/core/errors/exceptions.dart';
 import 'package:autiscope_app/features/add_child/data/model/child_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,17 +40,29 @@ class AddChildRemoteDataSourceImpl implements AddChildRemoteDataSource {
   @override
   Future<List<ChildModel>> getChildren({required String userId}) async {
     try {
-      CollectionReference childrenCollection = FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('children');
-      QuerySnapshot querySnapshot = await childrenCollection.get();
-      List<ChildModel> children = [];
-      for (var child in querySnapshot.docs) {
-        Map<String, dynamic> json = child.data() as Map<String, dynamic>;
-        children.add(ChildModel.formJson(json));
+      List<ChildModel> childModels = [];
+
+      try {
+        // Access the children collection inside the user's document
+        QuerySnapshot<Map<String, dynamic>> childrenSnapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('children')
+            .get();
+
+        // Iterate over the child documents
+        childrenSnapshot.docs.forEach((childDoc) {
+          log('==================================== childDoc ${childDoc.data()}');
+          ChildModel childModel = ChildModel.fromJson(childDoc.data());
+          childModels.add(childModel);
+        });
+      } catch (e) {
+        log('Error retrieving child models: $e');
+        // Handle error as needed
       }
-      return children;
+
+      return childModels;
     } on Exception {
       throw ServerException();
     }

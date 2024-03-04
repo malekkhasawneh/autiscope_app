@@ -1,6 +1,7 @@
 import 'package:autiscope_app/core/usecase/usecase.dart';
 import 'package:autiscope_app/features/login/domain/usecase/get_user_info_usecase.dart';
 import 'package:autiscope_app/features/login/domain/usecase/login_usecase.dart';
+import 'package:autiscope_app/features/login/domain/usecase/set_is_login.dart';
 import 'package:autiscope_app/features/login/domain/usecase/set_user_info_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,13 +17,15 @@ class LoginCubit extends Cubit<LoginState> {
     required this.loginUseCase,
     required this.setUserInfoUseCase,
     required this.getUserInfoUseCase,
+    required this.setIsLoginUseCase,
   }) : super(LoginInitial());
 
   final LoginUseCase loginUseCase;
   final SetUserInfoUseCase setUserInfoUseCase;
   final GetUserInfoUseCase getUserInfoUseCase;
+  final SetIsLoginUseCase setIsLoginUseCase;
 
-  late User user;
+  String userId = '';
 
   bool _check = false;
 
@@ -46,7 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
       response.fold(
         (failure) => emit(LoginError(failure: failure.failure)),
         (userInfo) async {
-          user = userInfo;
+          userId = userInfo.uid;
           await setUserInfo(user: userInfo);
           emit(
             LoginLoaded(userInfo: userInfo),
@@ -76,13 +79,24 @@ class LoginCubit extends Cubit<LoginState> {
       final response = await getUserInfoUseCase(NoParams());
       response.fold(
         (failure) => emit(LoginError(failure: failure.failure)),
-        (userInfo) {
-          user = userInfo;
+        (userId) {
+          this.userId = userId;
           emit(
             SetAndGetLoaded(),
           );
         },
       );
+    } catch (error) {
+      emit(LoginError(failure: error.toString()));
+    }
+  }
+
+  Future<void> setIsLogin() async {
+    emit(LoginLoading());
+    try {
+      final response = await setIsLoginUseCase(NoParams());
+      response.fold((failure) => emit(LoginError(failure: failure.failure)),
+          (success) => emit(SetAndGetLoaded()));
     } catch (error) {
       emit(LoginError(failure: error.toString()));
     }

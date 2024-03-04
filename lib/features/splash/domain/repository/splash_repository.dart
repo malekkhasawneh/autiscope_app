@@ -5,4 +5,6 @@ abstract class SplashRepository {
   Future<Either<Failures, void>> setIsFirstTime();
 
   Future<Either<Failures, bool>> getIsFirstTime();
+
+  Future<Either<Failures, bool>> isLogin();
 }

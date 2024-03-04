@@ -15,7 +15,7 @@ class SplashRepositoryImpl implements SplashRepository {
       final response = await localDataSource.getIsFirstTime();
       return Right(response);
     } on CacheException {
-      return const Left(CacheFailure(failure: 'CacheFailure'));
+      return const Left(CacheFailure(failure: 'Cache error'));
     }
   }
 
@@ -25,7 +25,17 @@ class SplashRepositoryImpl implements SplashRepository {
       final response = await localDataSource.setIsFirstTime();
       return Right(response);
     } on CacheException {
-      return const Left(CacheFailure(failure: 'CacheFailure'));
+      return const Left(CacheFailure(failure: 'Cache error'));
+    }
+  }
+
+  @override
+  Future<Either<Failures, bool>> isLogin() async {
+    try {
+      final response = await localDataSource.isLogin();
+      return Right(response);
+    } on CacheException {
+      return const Left(CacheFailure(failure: 'Cache error'));
     }
   }
 }

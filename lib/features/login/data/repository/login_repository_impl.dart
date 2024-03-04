@@ -34,7 +34,7 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Either<Failures, User>> getUserInfo() async {
+  Future<Either<Failures, String>> getUserInfo() async {
     try {
       final response = await localDataSource.getUserInfo();
       return Right(response);
@@ -47,6 +47,16 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failures, void>> setUserInfo({required User user}) async {
     try {
       final response = await localDataSource.setUserInfo(user: user);
+      return Right(response);
+    } on CacheException {
+      return const Left(CacheFailure(failure: 'cache error'));
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> setIsLogin() async {
+    try {
+      final response = await localDataSource.setIsLogin();
       return Right(response);
     } on CacheException {
       return const Left(CacheFailure(failure: 'cache error'));

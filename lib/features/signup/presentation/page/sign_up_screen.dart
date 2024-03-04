@@ -17,11 +17,10 @@ class SignUpScreen extends StatelessWidget {
         listener: (context, state) async {
           if (state is SignUpLoaded) {
             if (state.isSignUp) {
-              log('===============================================skdjvjsdnjsdnj');
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('تم تسجيل الحساب بنجاح')));
               await Future.delayed(const Duration(seconds: 3)).then(
-                      (value) => Navigator.pushNamed(context, Routes.loginScreen));
+                  (value) => Navigator.pushNamed(context, Routes.loginScreen));
             }
           }
         },
@@ -40,28 +39,33 @@ class SignUpScreen extends StatelessWidget {
                       title: Strings.firstName,
                       controller: SignUpCubit.get(context).firstName,
                       check: SignUpCubit.get(context).getCheck,
+                      keyBoardType: TextInputType.name,
                     ),
                     CustomTextFieldWidget(
                       title: Strings.lastName,
                       controller: SignUpCubit.get(context).lastName,
                       check: SignUpCubit.get(context).getCheck,
+                      keyBoardType: TextInputType.name,
                     ),
                     CustomTextFieldWidget(
                       title: Strings.email,
                       check: SignUpCubit.get(context).getCheck,
                       controller: SignUpCubit.get(context).email,
+                      keyBoardType: TextInputType.emailAddress,
                     ),
                     CustomTextFieldWidget(
                       title: Strings.password,
                       isSecure: true,
                       check: SignUpCubit.get(context).getCheck,
                       controller: SignUpCubit.get(context).password,
+                      keyBoardType: TextInputType.visiblePassword,
                     ),
                     CustomTextFieldWidget(
                       title: Strings.confirmPassword,
                       isSecure: true,
                       controller: SignUpCubit.get(context).confirmPassword,
                       check: SignUpCubit.get(context).getCheck,
+                      keyBoardType: TextInputType.visiblePassword,
                     ),
                     const SizedBox(
                       height: 40,

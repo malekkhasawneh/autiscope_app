@@ -1,4 +1,6 @@
 import 'package:autiscope_app/core/resources/resources.dart';
+import 'package:autiscope_app/features/parent_questions/domain/entity/question_entity.dart';
+import 'package:autiscope_app/features/parent_questions/presentation/cubit/parent_question_cubit.dart';
 import 'package:flutter/material.dart';
 
 class QuestionCustomWidget extends StatelessWidget {
@@ -7,7 +9,7 @@ class QuestionCustomWidget extends StatelessWidget {
     required this.question,
   });
 
-  final String question;
+  final QuestionEntity question;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,11 @@ class QuestionCustomWidget extends StatelessWidget {
             children: [
               Checkbox(
                 visualDensity: VisualDensity.compact,
-                value: false,
-                onChanged: (bool? value) {},
+                value: question.isSelected,
+                onChanged: (bool? value) {
+                  ParentQuestionCubit.get(context)
+                      .setSelectedQuestion(question.id);
+                },
                 activeColor: AppColors.darkYellow,
                 side: const BorderSide(
                   color: AppColors.darkYellow,
@@ -32,7 +37,7 @@ class QuestionCustomWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                question,
+                question.question,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
               ),

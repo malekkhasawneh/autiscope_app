@@ -4,6 +4,7 @@ import 'package:autiscope_app/features/login/data/repository/login_repository_im
 import 'package:autiscope_app/features/login/domain/repository/login_repository.dart';
 import 'package:autiscope_app/features/login/domain/usecase/get_user_info_usecase.dart';
 import 'package:autiscope_app/features/login/domain/usecase/login_usecase.dart';
+import 'package:autiscope_app/features/login/domain/usecase/set_is_login.dart';
 import 'package:autiscope_app/features/login/domain/usecase/set_user_info_usecase.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:autiscope_app/injection_container/injection.dart';
@@ -14,7 +15,7 @@ Future<void> loginInjection() async {
     () => LoginCubit(
       loginUseCase: sl(),
       setUserInfoUseCase: sl(),
-      getUserInfoUseCase: sl(),
+      getUserInfoUseCase: sl(), setIsLoginUseCase: sl(),
     ),
   );
 
@@ -22,6 +23,7 @@ Future<void> loginInjection() async {
   sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetUserInfoUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetUserInfoUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SetIsLoginUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<LoginRepository>(

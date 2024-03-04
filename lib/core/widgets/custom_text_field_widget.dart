@@ -7,13 +7,14 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.isSecure = false,
     this.check = false,
     required this.controller,
+    required this.keyBoardType,
   });
 
   final String title;
   final bool isSecure;
   final TextEditingController controller;
   final bool check;
-
+final TextInputType keyBoardType;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,9 +43,7 @@ class CustomTextFieldWidget extends StatelessWidget {
           ),
           child: TextFormField(
             obscureText: isSecure,
-            keyboardType: isSecure
-                ? TextInputType.emailAddress
-                : TextInputType.visiblePassword,
+            keyboardType: keyBoardType,
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(bottom: 10)),

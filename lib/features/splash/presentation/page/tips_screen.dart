@@ -59,13 +59,10 @@ class TipsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'فهمت',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
                       Checkbox(
                         value:  SplashCubit.get(context).getIsTipsChecked,
                         onChanged: (bool? value) {
+                          SplashCubit.get(context).setIsFirstTime();
                           SplashCubit.get(context).setIsTipsChecked = value!;
                         },
                         activeColor: AppColors.darkYellow,
@@ -73,6 +70,10 @@ class TipsScreen extends StatelessWidget {
                           color: AppColors.darkYellow,
                           width: 1.5, // Border width
                         ),
+                      ),
+                      const Text(
+                        'فهمت',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

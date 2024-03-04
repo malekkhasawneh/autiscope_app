@@ -4,13 +4,13 @@ import 'package:autiscope_app/features/add_child/domain/repository/add_child_rep
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class AddChildUseCase extends UseCase<void, AddChildUseCaseParams> {
+class AddChildUseCase extends UseCase<bool, AddChildUseCaseParams> {
   final AddChildRepository repository;
 
   AddChildUseCase({required this.repository});
 
   @override
-  Future<Either<Failures, void>> call(AddChildUseCaseParams params) async {
+  Future<Either<Failures, bool>> call(AddChildUseCaseParams params) async {
     return await repository.addChild(
         userId: params.userId,
         name: params.name,

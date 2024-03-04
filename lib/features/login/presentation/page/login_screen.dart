@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
       if (state is LoginLoaded) {
+        LoginCubit.get(context).setIsLogin();
         Navigator.pushNamed(context, Routes.addChildScreen);
       }
     }, builder: (context, state) {
@@ -30,15 +31,16 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 CustomTextFieldWidget(
-                  title: Strings.email,
-                  controller: LoginCubit.get(context).email,
-                  check: LoginCubit.get(context).getCheck,
-                ),
+                    title: Strings.email,
+                    controller: LoginCubit.get(context).email,
+                    check: LoginCubit.get(context).getCheck,
+                    keyBoardType: TextInputType.emailAddress),
                 CustomTextFieldWidget(
                   title: Strings.password,
                   isSecure: true,
                   controller: LoginCubit.get(context).password,
                   check: LoginCubit.get(context).getCheck,
+                  keyBoardType: TextInputType.visiblePassword,
                 ),
                 const SizedBox(
                   height: 40,
@@ -65,16 +67,27 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      Strings.forgetPassword,
-                      style: TextStyle(fontSize: 12),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, Routes.forgetPasswordScreen);
+                      },
+                      child: const Text(
+                        Strings.forgetPassword,
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ),
-                    Text(
-                      Strings.newUser,
-                      style: TextStyle(fontSize: 12, color: Colors.blue),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.signUpScreen);
+                      },
+                      child: const Text(
+                        Strings.newUser,
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),

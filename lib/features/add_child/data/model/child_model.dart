@@ -3,16 +3,12 @@ class ChildModel {
   final String nickName;
   final String age;
 
-  ChildModel(
-      {
-      required this.name,
-      required this.nickName,
-      required this.age});
+  ChildModel({required this.name, required this.nickName, required this.age});
 
-  factory ChildModel.formJson(Map<String, dynamic> json) {
+  factory ChildModel.fromJson(Map<String, dynamic> json) {
     return ChildModel(
       name: json['name'],
-      nickName: json['nickName'],
+      nickName: json['nickname'],
       age: json['age'],
     );
   }

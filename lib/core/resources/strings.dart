@@ -29,6 +29,7 @@ class Strings {
   static const String childName = 'إسم الطفل';
   static const String childNicName = 'إسم الطفل المحبب (اللقب)';
   static const String childAge = 'عمر الطفل';
+  static const String children = 'الأطفال';
   static const String oneYearToThree = 'من سنة ونصف إلى ثلاثة سنوات';
   static const String threeYearToFour = 'ثلاثة سنوات إلى اربعة سنوات ونصف';
   static const String confirm = 'تأكيد';

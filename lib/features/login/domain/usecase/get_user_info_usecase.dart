@@ -4,13 +4,13 @@ import 'package:autiscope_app/features/login/domain/repository/login_repository.
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class GetUserInfoUseCase extends UseCase<User, NoParams> {
+class GetUserInfoUseCase extends UseCase<String, NoParams> {
   final LoginRepository repository;
 
   GetUserInfoUseCase({required this.repository});
 
   @override
-  Future<Either<Failures, User>> call(NoParams params) async {
+  Future<Either<Failures, String>> call(NoParams params) async {
     return await repository.getUserInfo();
   }
 }

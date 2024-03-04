@@ -15,14 +15,16 @@ class AddChildLoading extends AddChildState {
 }
 
 class AddChildLoaded extends AddChildState {
-  const AddChildLoaded();
+  final bool success;
+
+  const AddChildLoaded({required this.success});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [success];
 }
 
 class GetChildLoaded extends AddChildState {
-  final ChildModel childModel;
+  final List<ChildModel> childModel;
 
   const GetChildLoaded({required this.childModel});
 
