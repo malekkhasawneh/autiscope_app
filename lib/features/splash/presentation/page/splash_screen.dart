@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) async {
              if (state is SplashLoaded) {
-          await Future.delayed(const Duration(seconds: 5)).then((_) async {
+/*          await Future.delayed(const Duration(seconds: 5)).then((_) async {
             if (SplashCubit.get(context).isFirstTime) {
               Navigator.pushNamed(context, Routes.tipsScreen);
             } else {
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Navigator.pushNamed(context, Routes.loginScreen);
               }
             }
-          });
+          });*/
         }
       },
       builder: (context, state) {

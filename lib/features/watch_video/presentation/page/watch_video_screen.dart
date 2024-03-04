@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
 import 'package:chewie/chewie.dart';
@@ -12,23 +14,32 @@ class WatchVideoScreen extends StatefulWidget {
 }
 
 class _WatchVideoScreenState extends State<WatchVideoScreen> {
-  late VideoPlayerController _controller;
+  late VideoPlayerController _videoController;
   late ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
     WatchVideoCubit.get(context).initCamera();
-    _controller = VideoPlayerController.asset('video/video.mp4');
+    _videoController = VideoPlayerController.asset('video/video.mp4')
+      ..addListener(_videoListener);
     _chewieController = ChewieController(
-      videoPlayerController: _controller,
-      aspectRatio: 9.5 / 7.5,
-    );
+        videoPlayerController: _videoController,
+        aspectRatio: 9.5 / 7.5,
+        autoPlay: true)..addListener(() {log('================================== jj ${_chewieController.videoPlayerController.value.isPlaying}');});
+  }
+
+  void _videoListener() {
+    if (_videoController.value.position >= _videoController.value.duration) {
+      WatchVideoCubit.get(context).stopCameraStreaming();
+      WatchVideoCubit.get(context).checkForAutism();
+      log('======================================== Ended');
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _videoController.dispose();
     _chewieController.dispose();
     WatchVideoCubit.get(context).stopCameraStreaming();
     super.dispose();
@@ -36,6 +47,10 @@ class _WatchVideoScreenState extends State<WatchVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _videoController.seekTo(Duration.zero);
+    _chewieController.seekTo(Duration.zero);
+    _videoController.pause();
+    _chewieController.pause();
     return Scaffold(
       body: Directionality(
         textDirection: TextDirection.ltr,
@@ -70,13 +85,6 @@ class _WatchVideoScreenState extends State<WatchVideoScreen> {
                 WatchVideoCubit.get(context).startCameraStream();
               },
               child: const Icon(Icons.start),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                WatchVideoCubit.get(context).stopCameraStreaming();
-                WatchVideoCubit.get(context).checkForAutism();
-              },
-              child: const Icon(Icons.stop),
             ),
           ],
         ),

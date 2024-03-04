@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.backgroundColor,
         ),
         onGenerateRoute: RouteGenerator.generateRoute,
-        initialRoute: Routes.splashScreen,
+        initialRoute: Routes.watchVideoScreen,
         locale: const Locale('ar', 'JO'),
       ),
     );
