@@ -1,4 +1,5 @@
 import 'package:autiscope_app/core/errors/failures.dart';
+import 'package:autiscope_app/features/login/data/model/user_info_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

@@ -26,6 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
   final SetIsLoginUseCase setIsLoginUseCase;
 
   String userId = '';
+  String userEmail = '';
 
   bool _check = false;
 
@@ -80,7 +81,8 @@ class LoginCubit extends Cubit<LoginState> {
       response.fold(
         (failure) => emit(LoginError(failure: failure.failure)),
         (userId) {
-          this.userId = userId;
+          this.userId = userId.split(',').first;
+          userEmail = userId.split(',').last;
           emit(
             SetAndGetLoaded(),
           );
@@ -103,6 +105,8 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   bool validateFields() {
-    return email.text.isNotEmpty && password.text.isNotEmpty;
+    return email.text.isNotEmpty &&
+        password.text.isNotEmpty &&
+        email.text.contains('@');
   }
 }

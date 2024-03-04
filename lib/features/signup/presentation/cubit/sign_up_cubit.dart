@@ -34,13 +34,13 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(SignUpLoading());
     try {
       final response = await signUpUseCase(SignUpUseCaseParams(
-          email: email.text,
-          password: password.text,
-          firstName: firstName.text,
-          lastName: lastName.text));
+          email: email.text.trim(),
+          password: password.text.trim(),
+          firstName: firstName.text.trim(),
+          lastName: lastName.text.trim()));
       response.fold((failure) => emit(SignUpError(error: failure.failure)),
           (res) {
-       emit(SignUpLoaded(isSignUp: res));
+        emit(SignUpLoaded(isSignUp: res));
       });
     } catch (error) {
       emit(SignUpError(error: error.toString()));
@@ -48,11 +48,14 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   bool validateControllers() {
-    log('=================================== firs ${firstName.text}');
+    log('=================================== first ${firstName.text}');
     return firstName.text.isNotEmpty &&
         lastName.text.isNotEmpty &&
         email.text.isNotEmpty &&
         password.text.isNotEmpty &&
-        confirmPassword.text.isNotEmpty;
+        confirmPassword.text.isNotEmpty &&
+        email.text.contains('@') &&
+        password.text.length > 6 &&
+        password.text == confirmPassword.text;
   }
 }

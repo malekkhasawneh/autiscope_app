@@ -6,6 +6,8 @@ class CustomTextFieldWidget extends StatelessWidget {
     required this.title,
     this.isSecure = false,
     this.check = false,
+    this.additionalCheckStatement = false,
+    this.additionalCheckText = '',
     required this.controller,
     required this.keyBoardType,
   });
@@ -14,7 +16,10 @@ class CustomTextFieldWidget extends StatelessWidget {
   final bool isSecure;
   final TextEditingController controller;
   final bool check;
-final TextInputType keyBoardType;
+  final bool additionalCheckStatement;
+  final String additionalCheckText;
+  final TextInputType keyBoardType;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -59,7 +64,11 @@ final TextInputType keyBoardType;
           ),
         ),
         Text(
-          controller.text.isEmpty && check ? 'هذا الحقل اجباري' : '',
+          controller.text.isEmpty && check
+              ? 'هذا الحقل اجباري'
+              : additionalCheckStatement && check
+                  ? additionalCheckText
+                  : '',
           style: const TextStyle(fontSize: 12, color: Colors.red),
         ),
       ],

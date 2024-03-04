@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
 import 'package:autiscope_app/features/signup/presentation/cubit/sign_up_cubit.dart';
@@ -52,6 +50,9 @@ class SignUpScreen extends StatelessWidget {
                       check: SignUpCubit.get(context).getCheck,
                       controller: SignUpCubit.get(context).email,
                       keyBoardType: TextInputType.emailAddress,
+                      additionalCheckStatement:
+                          !SignUpCubit.get(context).email.text.contains('@'),
+                      additionalCheckText: 'تنسيق البريد الالكتروني غير صحيح',
                     ),
                     CustomTextFieldWidget(
                       title: Strings.password,
@@ -59,6 +60,10 @@ class SignUpScreen extends StatelessWidget {
                       check: SignUpCubit.get(context).getCheck,
                       controller: SignUpCubit.get(context).password,
                       keyBoardType: TextInputType.visiblePassword,
+                      additionalCheckStatement:
+                          SignUpCubit.get(context).password.text.length < 6,
+                      additionalCheckText:
+                          'يجب ان لا يقل طول كلمة المرور عن ستة',
                     ),
                     CustomTextFieldWidget(
                       title: Strings.confirmPassword,
@@ -66,6 +71,10 @@ class SignUpScreen extends StatelessWidget {
                       controller: SignUpCubit.get(context).confirmPassword,
                       check: SignUpCubit.get(context).getCheck,
                       keyBoardType: TextInputType.visiblePassword,
+                      additionalCheckStatement:
+                          SignUpCubit.get(context).confirmPassword.text !=
+                              SignUpCubit.get(context).password.text,
+                      additionalCheckText: 'كلمة المرور غير متطابقة',
                     ),
                     const SizedBox(
                       height: 40,

@@ -29,6 +29,11 @@ class SignUpRemoteDataSourceImpl implements SignUpRemoteDataSource {
           'firstName': firstName,
           'lastName': lastName,
         });
+        CollectionReference registeredEmails =
+            FirebaseFirestore.instance.collection('registeredEmails');
+        await registeredEmails.add({
+          'email': email,
+        });
         return true;
       } catch (e) {
         return false;

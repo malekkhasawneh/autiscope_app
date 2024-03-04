@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
@@ -11,6 +13,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
       if (state is LoginLoaded) {
+        log('=============================================== Here');
         LoginCubit.get(context).setIsLogin();
         Navigator.pushNamed(context, Routes.addChildScreen);
       }
@@ -31,16 +34,23 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 CustomTextFieldWidget(
-                    title: Strings.email,
-                    controller: LoginCubit.get(context).email,
-                    check: LoginCubit.get(context).getCheck,
-                    keyBoardType: TextInputType.emailAddress),
+                  title: Strings.email,
+                  controller: LoginCubit.get(context).email,
+                  check: LoginCubit.get(context).getCheck,
+                  keyBoardType: TextInputType.emailAddress,
+                  additionalCheckStatement:
+                      !LoginCubit.get(context).email.text.contains('@'),
+                  additionalCheckText: 'تنسيق البريد الالكتروني غير صحيح',
+                ),
                 CustomTextFieldWidget(
                   title: Strings.password,
                   isSecure: true,
                   controller: LoginCubit.get(context).password,
                   check: LoginCubit.get(context).getCheck,
                   keyBoardType: TextInputType.visiblePassword,
+                  additionalCheckStatement:
+                      LoginCubit.get(context).password.text.length < 6,
+                  additionalCheckText: 'يجب ان لا يقل طول كلمة المرور عن ستة',
                 ),
                 const SizedBox(
                   height: 40,
@@ -53,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.circular(8), // Border radius here
+                          BorderRadius.circular(8), // Border radius here
                         ),
                       ),
                       onPressed: () {

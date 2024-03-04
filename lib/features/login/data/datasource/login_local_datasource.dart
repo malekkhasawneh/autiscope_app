@@ -15,7 +15,8 @@ class LoginLocalDataSourceImpl implements LoginLocalDataSource {
   @override
   Future<void> setUserInfo({required User user}) async {
     try {
-      await CacheHelper.setValue(key: CacheKeys.userInfo, value: user.uid);
+      await CacheHelper.setValue(
+          key: CacheKeys.userInfo, value: '${user.uid},${user.email}');
     } on Exception {
       throw CacheException();
     }

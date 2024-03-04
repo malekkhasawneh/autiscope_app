@@ -1,5 +1,6 @@
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
+import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:autiscope_app/features/splash/presentation/cubit/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) async {
-        /*     if (state is SplashLoaded) {
+             if (state is SplashLoaded) {
           await Future.delayed(const Duration(seconds: 5)).then((_) async {
             if (SplashCubit.get(context).isFirstTime) {
               Navigator.pushNamed(context, Routes.tipsScreen);
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
               }
             }
           });
-        }*/
+        }
       },
       builder: (context, state) {
         return Scaffold(

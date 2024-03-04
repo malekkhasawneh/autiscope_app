@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:autiscope_app/core/network/network_info.dart';
+import 'package:autiscope_app/injection_container/add_child_injection.dart';
 import 'package:autiscope_app/injection_container/login_injection.dart';
 import 'package:autiscope_app/injection_container/sign_up_injection.dart';
 import 'package:autiscope_app/injection_container/splash_injection.dart';
@@ -18,6 +19,7 @@ Future<void> init() async {
   loginInjection();
   watchVideoInjection();
   splashInjection();
+  addChildInjection();
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(
         connectivity: sl(),

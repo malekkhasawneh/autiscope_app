@@ -3,6 +3,7 @@ import 'package:autiscope_app/core/errors/failures.dart';
 import 'package:autiscope_app/core/network/network_info.dart';
 import 'package:autiscope_app/features/login/data/datasource/login_local_datasource.dart';
 import 'package:autiscope_app/features/login/data/datasource/login_remote_datasource.dart';
+import 'package:autiscope_app/features/login/data/model/user_info_model.dart';
 import 'package:autiscope_app/features/login/domain/repository/login_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -4,7 +4,6 @@ import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
 import 'package:autiscope_app/features/add_child/presentation/cubit/add_child_cubit.dart';
 import 'package:autiscope_app/features/add_child/presentation/widgets/check_boxes_widget.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,6 @@
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
+import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
@@ -32,7 +33,11 @@ class ForgetPasswordScreen extends StatelessWidget {
                           BorderRadius.circular(8), // Border radius here
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    WatchVideoCubit.get(context).sendMail(
+                        subject: 'Rest Password',
+                        text:'Your OTP is : ${WatchVideoCubit.get(context).generateOTP()}');
+                  },
                   child: const Text(Strings.confirm)),
             ),
           ]),

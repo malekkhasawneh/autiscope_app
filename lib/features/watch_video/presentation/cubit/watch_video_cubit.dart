@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' as math;
 
-import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/utils/camera_config.dart';
 import 'package:autiscope_app/core/widgets/convert_image.dart';
 import 'package:autiscope_app/features/watch_video/domain/usecase/check_for_autism_usecase.dart';
@@ -13,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image/image.dart' as imgee;
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -92,15 +91,15 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
     }
   }
 
-  void sendMail() async {
-    String username = dotenv.env[Constants.officialEmail]!;
-    String password = dotenv.env[Constants.officialEmailPassword]!;
+  void sendMail({required String subject,required String text}) async {
+    String username = 'autiscope.app@gmail.com';
+    String password = 'qquzwczvfkqnvsly';
     final smtpServer = gmail(username, password);
     final message = Message()
       ..from = Address(username, 'أوتِيسكوب Autiscope')
       ..recipients.add('malekmamoon341@gmail.com')
-      ..subject = 'Mail'
-      ..text = 'Message: Test';
+      ..subject = subject
+      ..text = text;
 
     try {
       await send(message, smtpServer);
@@ -110,5 +109,13 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
         print(e.toString());
       }
     }
+  }
+
+  String generateOTP() {
+    const int otpLength = 6;
+    final math.Random random = math.Random();
+    List<int> digits = List.generate(otpLength, (index) => random.nextInt(10));
+    String otp = digits.join('');
+    return otp;
   }
 }
