@@ -2,8 +2,10 @@ import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:autiscope_app/features/splash/presentation/cubit/splash_cubit.dart';
+import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,15 +19,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     SplashCubit.get(context).getIsFirstTime();
     SplashCubit.get(context).isUserLogin();
+    test();
     super.initState();
   }
-
+void test()async{
+  await Permission.camera.request();
+  await Permission.microphone.request();
+}
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) async {
-             if (state is SplashLoaded) {
-/*          await Future.delayed(const Duration(seconds: 5)).then((_) async {
+        if (state is SplashLoaded) {
+          await Future.delayed(const Duration(seconds: 5)).then((_) async {
             if (SplashCubit.get(context).isFirstTime) {
               Navigator.pushNamed(context, Routes.tipsScreen);
             } else {
@@ -36,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Navigator.pushNamed(context, Routes.loginScreen);
               }
             }
-          });*/
+          });
         }
       },
       builder: (context, state) {

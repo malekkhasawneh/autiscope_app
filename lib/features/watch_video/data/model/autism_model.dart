@@ -1,16 +1,16 @@
 class AutismModel {
   final String response;
   final bool result;
-  final double percentage;
+  final double precentage;
 
   AutismModel(
-      {required this.response, required this.result, required this.percentage});
+      {required this.response, required this.result, required this.precentage});
 
   factory AutismModel.fromJson(Map<String, dynamic> json) {
     return AutismModel(
-      response: json['response'],
-      result: json['result'],
-      percentage: json['percentage'],
+      response: json['response'] ?? '',
+      result: json['result'] ?? false,
+      precentage: json['precentage'] ?? 0,
     );
   }
 }

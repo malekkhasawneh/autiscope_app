@@ -37,5 +37,6 @@ class ExamCameraService {
     return _cameraController!;
   }
 
+
   Future<void>? get initializeControllerFuture => _initializeControllerFuture;
 }

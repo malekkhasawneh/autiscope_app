@@ -1,11 +1,23 @@
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/parent_questions/presentation/cubit/parent_question_cubit.dart';
 import 'package:autiscope_app/features/parent_questions/presentation/widgets/question_custom_widget.dart';
+import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ParentQuestionsScreen extends StatelessWidget {
+class ParentQuestionsScreen extends StatefulWidget {
   const ParentQuestionsScreen({super.key});
+
+  @override
+  State<ParentQuestionsScreen> createState() => _ParentQuestionsScreenState();
+}
+
+class _ParentQuestionsScreenState extends State<ParentQuestionsScreen> {
+  @override
+  void initState() {
+    WatchVideoCubit.get(context).clearCache();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +61,7 @@ class ParentQuestionsScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
+                          ParentQuestionCubit.get(context).checkIfHasAutism();
                           Navigator.pushNamed(context, Routes.watchVideoScreen);
                         },
                         child: const Text(Strings.next)),

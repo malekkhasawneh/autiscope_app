@@ -43,20 +43,17 @@ class AddChildRemoteDataSourceImpl implements AddChildRemoteDataSource {
       List<ChildModel> childModels = [];
 
       try {
-        // Access the children collection inside the user's document
         QuerySnapshot<Map<String, dynamic>> childrenSnapshot =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .collection('children')
-            .get();
-
-        // Iterate over the child documents
-        childrenSnapshot.docs.forEach((childDoc) {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(userId)
+                .collection('children')
+                .get();
+        for (var childDoc in childrenSnapshot.docs) {
           log('==================================== childDoc ${childDoc.data()}');
           ChildModel childModel = ChildModel.fromJson(childDoc.data());
           childModels.add(childModel);
-        });
+        }
       } catch (e) {
         log('Error retrieving child models: $e');
         // Handle error as needed

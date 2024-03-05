@@ -15,13 +15,19 @@ class WatchVideoLoading extends WatchVideoState {
 }
 
 class WatchVideoLoaded extends WatchVideoState {
+  final bool isSuccess;
+
+  const WatchVideoLoaded({required this.isSuccess});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isSuccess];
 }
+
 class WatchVideoError extends WatchVideoState {
   final String failure;
 
   const WatchVideoError({required this.failure});
+
   @override
   List<Object> get props => [failure];
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autiscope_app/core/errors/exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +38,8 @@ class SignUpRemoteDataSourceImpl implements SignUpRemoteDataSource {
         });
         return true;
       } catch (e) {
-        return false;
+        log('=================================== log error ${e.toString()}');
+        throw ServerException();
       }
     } on Exception {
       throw ServerException();

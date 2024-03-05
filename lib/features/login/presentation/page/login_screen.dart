@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
+import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,14 @@ class LoginScreen extends StatelessWidget {
         log('=============================================== Here');
         LoginCubit.get(context).setIsLogin();
         Navigator.pushNamed(context, Routes.addChildScreen);
+      } else if (state is LoginError) {
+        if (state.failure == 'server error') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('يرجى التحقق من البريد الالكتروني وكلمة المرور'),
+            ),
+          );
+        }
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -63,16 +72,24 @@ class LoginScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius:
-                          BorderRadius.circular(8), // Border radius here
+                              BorderRadius.circular(8), // Border radius here
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         LoginCubit.get(context).setCheck = true;
                         if (LoginCubit.get(context).validateFields()) {
                           LoginCubit.get(context).login();
                         }
                       },
-                      child: const Text(Strings.login)),
+                      child: (state is LoginLoading)
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(Strings.login)),
                 ),
                 const SizedBox(
                   height: 10,

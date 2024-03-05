@@ -33,6 +33,7 @@ dependencies:
   mailer: ^6.1.0
   flutter_localizations:
     sdk: flutter
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

@@ -136,7 +136,8 @@ class _AddChildScreenState extends State<AddChildScreen> {
                                           height: 40,
                                         ),
                                         const Padding(
-                                          padding: EdgeInsetsDirectional.only(start: 25),
+                                          padding: EdgeInsetsDirectional.only(
+                                              start: 25),
                                           child: Text(
                                             Strings.children,
                                             style: TextStyle(
@@ -153,6 +154,10 @@ class _AddChildScreenState extends State<AddChildScreen> {
                                             .map((child) {
                                           return ListTile(
                                             dense: true,
+                                            onTap: () {
+                                              Navigator.pushNamed(context,
+                                                  Routes.parentQuestionsScreen);
+                                            },
                                             leading: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(100),

@@ -9,6 +9,7 @@ import 'package:autiscope_app/core/widgets/convert_image.dart';
 import 'package:autiscope_app/features/watch_video/domain/usecase/check_for_autism_usecase.dart';
 import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,18 +33,22 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
   late CameraImage cameraImage;
   Timer? timer;
 
-  initCamera() {
+  initCamera() async {
     try {
-      _examCameraService.initCameras().then((_) {
-        _examCameraService.initializeControllerFuture?.then((_) {});
-      });
+      await _examCameraService.initCameras().then(
+          (_) async => Future.delayed(const Duration(seconds: 2)).then((_) {
+                try {
+                  startCameraStream();
+                } catch (e) {
+                  startCameraStream();
+                }
+              }));
     } catch (e) {
       log("Failed to initialize camera: $e");
     }
   }
 
-  void stopCameraStreaming() {
-    _examCameraService.getCameraController().stopImageStream();
+  Future<void> stopCameraStreaming() async {
     _examCameraService.getCameraController().dispose();
     timer!.cancel();
   }
@@ -71,7 +76,7 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
     });
   }
 
-  Future<void> checkForAutism() async {
+  Future<void> checkForAutism({required bool parentQuestions}) async {
     emit(WatchVideoLoading());
     try {
       final response = await checkForAutismUseCase(
@@ -79,11 +84,19 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
       response.fold((failure) {
         log('====================================== failure ${failure.failure}');
         emit(WatchVideoError(failure: failure.toString()));
-      }, (success) {
-        log('====================================== success ${success.response}');
-        log('====================================== success ${success.result}');
-        log('====================================== success ${success.percentage}');
-        emit(WatchVideoLoaded());
+      }, (success) async {
+        if ((parentQuestions && success.result) ||
+            (parentQuestions && !success.result)) {
+          log('========================================== ooo ${parentQuestions}');
+          log('========================================== ooo ${success.result}');
+          log('========================================== ooo ${success.precentage}');
+          log('========================================== ooo ${(success.precentage * 0.70 + 0.30) > 0.50}');
+          (success.precentage * 0.70 + 0.30) > 50
+              ? emit(const WatchVideoLoaded(isSuccess: true))
+              : emit(const WatchVideoLoaded(isSuccess: false));
+        } else if (!parentQuestions && success.result) {
+          emit(WatchVideoLoaded(isSuccess: (success.precentage * 0.70 > 0.50)));
+        }
       });
     } catch (failure) {
       log('====================================== failure ${failure.toString()}');
@@ -91,16 +104,16 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
     }
   }
 
-  void sendMail({required String subject,required String text}) async {
+  void sendMail({required String text,required String email}) async {
+    User? user = FirebaseAuth.instance.currentUser;
     String username = 'autiscope.app@gmail.com';
     String password = 'qquzwczvfkqnvsly';
     final smtpServer = gmail(username, password);
     final message = Message()
       ..from = Address(username, 'أوتِيسكوب Autiscope')
-      ..recipients.add('malekmamoon341@gmail.com')
-      ..subject = subject
+      ..recipients.add(user!.email!)
+      ..subject = 'تقرير من أوتيسكوب'
       ..text = text;
-
     try {
       await send(message, smtpServer);
       log('Email sent successfully');
@@ -117,5 +130,23 @@ class WatchVideoCubit extends Cubit<WatchVideoState> {
     List<int> digits = List.generate(otpLength, (index) => random.nextInt(10));
     String otp = digits.join('');
     return otp;
+  }
+
+  Future<void> clearCache() async {
+    try {
+      images.clear();
+      Directory cacheDir = await getTemporaryDirectory();
+      List<FileSystemEntity> entities = cacheDir.listSync(recursive: true);
+      for (FileSystemEntity entity in entities) {
+        if (entity is File) {
+          await entity.delete();
+        } else if (entity is Directory) {
+          await entity.delete(recursive: true);
+        }
+      }
+      print('Cache cleared successfully');
+    } catch (e) {
+      print('Failed to clear cache: $e');
+    }
   }
 }

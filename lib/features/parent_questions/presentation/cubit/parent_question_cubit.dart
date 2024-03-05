@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/parent_questions/domain/entity/question_entity.dart';
 import 'package:equatable/equatable.dart';
@@ -29,6 +31,36 @@ class ParentQuestionCubit extends Cubit<ParentQuestionState> {
     emit(ParentQuestionLoading());
     questions.where((element) => element.id == id).first.isSelected =
         !questions.where((element) => element.id == id).first.isSelected;
+    emit(ParentQuestionLoaded());
+  }
+
+  List<int> falseAnswers = [];
+  bool hasAutism = false;
+
+  checkIfHasAutism() {
+    emit(ParentQuestionLoading());
+    int lessThanFour = 0;
+    int fromFiveToTen = 0;
+    questions
+        .where((element) => element.isSelected == false)
+        .forEach((question) {
+      falseAnswers.add(question.id);
+    });
+    for (var ques in falseAnswers) {
+      if (ques <= 4) {
+        lessThanFour++;
+      } else if (ques >= 5) {
+        fromFiveToTen++;
+      }
+    }
+    if (lessThanFour > 2 || fromFiveToTen > 3) {
+      log('================================== has an autism');
+      hasAutism = true;
+    } else {
+      log('================================== no autism');
+      hasAutism = false;
+    }
+    falseAnswers.clear();
     emit(ParentQuestionLoaded());
   }
 }
