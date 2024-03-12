@@ -7,6 +7,7 @@ import 'package:autiscope_app/features/forget_password/presentation/page/forget_
 import 'package:autiscope_app/features/login/presentation/page/login_screen.dart';
 import 'package:autiscope_app/features/parent_questions/presentation/page/parent_questions_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/flip_question_screen.dart';
+import 'package:autiscope_app/features/questions/presentation/pages/matching_question_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/question_tip_screen.dart';
 import 'package:autiscope_app/features/signup/presentation/page/sign_up_screen.dart';
 import 'package:autiscope_app/features/splash/presentation/page/splash_screen.dart';

@@ -37,6 +37,7 @@ dependencies:
   just_audio: ^0.9.36
   tflite_audio: ^0.3.0
   flutter_flip_card: ^0.0.5
+  speech_to_text: ^6.6.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:tflite_audio/tflite_audio.dart';
 
 part 'questions_state.dart';
@@ -93,5 +95,21 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   Future<void> stopListening() async {
     TfliteAudio.stopAudioRecognition();
+  }
+
+  Future<void> initSpeechToText() async {
+    emit(SetAndGetValueLoading());
+    await SpeechToText().initialize();
+    emit(SetAndGetValueLoaded());
+  }
+
+  Future<void> startListen() async {
+    emit(SetAndGetValueLoading());
+    await SpeechToText().listen(onResult: _onSpeechResult,listenFor: const Duration(seconds: 3));
+    emit(SetAndGetValueLoaded());
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    log('================================================= Here ${result.recognizedWords}');
   }
 }

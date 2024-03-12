@@ -19,7 +19,7 @@ class _CharacterQuestionTwoScreenState
   @override
   void initState() {
     QuestionsCubit.get(context)
-        .initModel(model: ModelsConstants.questionTwoModel);
+        .initModel(model: ModelsConstants.questionOneModel);
     _controller = VideoPlayerController.asset('video/char_question_two.mp4')
       ..initialize().then((_) {
         setState(() {});

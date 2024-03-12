@@ -4,4 +4,6 @@ class Images {
   static const String boyLogo = '${imagesRoute}boy_logo.png';
   static const String appleImage = '${imagesRoute}apple_image.png';
   static const String strawberryImage = '${imagesRoute}strawberry_image.png';
+  static const String motherImage = '${imagesRoute}mother_image.png';
+  static const String childImage = '${imagesRoute}child_image.png';
 }

@@ -18,8 +18,7 @@ class _CharacterQuestionOneScreenState
 
   @override
   void initState() {
-    QuestionsCubit.get(context)
-        .initModel(model: ModelsConstants.questionOneModel);
+    QuestionsCubit.get(context).initSpeechToText();
     _controller = VideoPlayerController.asset('video/char_question_one.mp4')
       ..initialize().then((_) {
         setState(() {});
@@ -34,7 +33,7 @@ class _CharacterQuestionOneScreenState
 
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      QuestionsCubit.get(context).recorder();
+      QuestionsCubit.get(context).startListen();
     }
   }
 

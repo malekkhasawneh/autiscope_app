@@ -15,6 +15,7 @@ class Routes {
   static const String charQuestionFourScreen = "/CharQuestionFourScreen";
   static const String flipQuestionScreen = "/FlipQuestionScreen";
   static const String questionTipScreen = '/QuestionTipScreen';
+  static const String matchingQuestionScreen = "/matchingQuestionScreen";
 }
 
 class RouteGenerator {
@@ -89,6 +90,11 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const QuestionTipScreen(),
           settings: const RouteSettings(name: Routes.questionTipScreen),
+        );
+      case Routes.matchingQuestionScreen:
+        return MaterialPageRoute(
+          builder: (_) => MatchingQuestionScreen(),
+          settings: const RouteSettings(name: Routes.matchingQuestionScreen),
         );
       default:
         return unDefinedRoute();
