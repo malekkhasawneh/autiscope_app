@@ -9,6 +9,12 @@ class Routes {
   static const String signUpScreen = "/SignUpScreen";
   static const String parentQuestionsScreen = "/ParentQuestionsScreen";
   static const String watchVideoScreen = "/WatchVideoScreen";
+  static const String charQuestionOneScreen = "/CharQuestionOneScreen";
+  static const String charQuestionTwoScreen = "/CharQuestionTwoScreen";
+  static const String charQuestionThreeScreen = "/CharQuestionThreeScreen";
+  static const String charQuestionFourScreen = "/CharQuestionFourScreen";
+  static const String flipQuestionScreen = "/FlipQuestionScreen";
+  static const String questionTipScreen = '/QuestionTipScreen';
 }
 
 class RouteGenerator {
@@ -53,6 +59,36 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const WatchVideoScreen(),
           settings: const RouteSettings(name: Routes.watchVideoScreen),
+        );
+      case Routes.charQuestionOneScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CharacterQuestionOneScreen(),
+          settings: const RouteSettings(name: Routes.charQuestionOneScreen),
+        );
+      case Routes.charQuestionTwoScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CharacterQuestionTwoScreen(),
+          settings: const RouteSettings(name: Routes.charQuestionTwoScreen),
+        );
+      case Routes.charQuestionThreeScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CharacterQuestionThreeScreen(),
+          settings: const RouteSettings(name: Routes.charQuestionThreeScreen),
+        );
+      case Routes.charQuestionFourScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CharacterQuestionFourScreen(),
+          settings: const RouteSettings(name: Routes.charQuestionFourScreen),
+        );
+      case Routes.flipQuestionScreen:
+        return MaterialPageRoute(
+          builder: (_) => const FlipQuestionScreen(),
+          settings: const RouteSettings(name: Routes.flipQuestionScreen),
+        );
+      case Routes.questionTipScreen:
+        return MaterialPageRoute(
+          builder: (_) => const QuestionTipScreen(),
+          settings: const RouteSettings(name: Routes.questionTipScreen),
         );
       default:
         return unDefinedRoute();

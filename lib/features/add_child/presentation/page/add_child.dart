@@ -1,3 +1,4 @@
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
@@ -155,8 +156,16 @@ class _AddChildScreenState extends State<AddChildScreen> {
                                           return ListTile(
                                             dense: true,
                                             onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  Routes.parentQuestionsScreen);
+                                              child.age ==
+                                                      Constants.oneThreeAgeGroup
+                                                  ? Navigator.pushNamed(
+                                                      context,
+                                                      Routes
+                                                          .parentQuestionsScreen)
+                                                  : Navigator.pushNamed(
+                                                      context,
+                                                      Routes
+                                                          .charQuestionOneScreen);
                                             },
                                             leading: ClipRRect(
                                               borderRadius:

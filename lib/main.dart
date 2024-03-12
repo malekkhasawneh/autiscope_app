@@ -3,6 +3,7 @@ import 'package:autiscope_app/features/add_child/presentation/cubit/add_child_cu
 import 'package:autiscope_app/features/forget_password/presentation/cubit/forget_password_cubit.dart';
 import 'package:autiscope_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:autiscope_app/features/parent_questions/presentation/cubit/parent_question_cubit.dart';
+import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:autiscope_app/features/signup/presentation/cubit/sign_up_cubit.dart';
 import 'package:autiscope_app/features/splash/presentation/cubit/splash_cubit.dart';
 import 'package:autiscope_app/features/watch_video/presentation/cubit/watch_video_cubit.dart';
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ForgetPasswordCubit>(
           create: (_) => di.sl<ForgetPasswordCubit>(),
         ),
+        BlocProvider<QuestionsCubit>(
+          create: (_) => QuestionsCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -72,7 +76,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.backgroundColor,
         ),
         onGenerateRoute: RouteGenerator.generateRoute,
-        initialRoute: Routes.splashScreen,
+        initialRoute: Routes.charQuestionOneScreen,
         locale: const Locale('ar', 'JO'),
       ),
     );

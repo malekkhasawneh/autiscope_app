@@ -1,0 +1,3 @@
+0 Autistic
+1 Background Noise
+2 Non-autistic
