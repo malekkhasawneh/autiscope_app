@@ -99,11 +99,15 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     TfliteAudio.stopAudioRecognition();
   }
 
+  Future<void> initSpeechToText() async {
+    await SpeechToText().initialize();
+  }
+
   Future<void> startSpeechListen() async {
     emit(SetAndGetValueLoading());
     await SpeechToText().listen(
         onResult: _onSpeechResult,
-        listenFor: const Duration(seconds: 5),
+        listenFor: const Duration(seconds: 15),
         localeId: 'ar');
     emit(SetAndGetValueLoaded());
   }
@@ -133,5 +137,15 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     emit(ModelAnswerLoaded(
         answer:
             answer ? ModelsConstants.nonAutistic : ModelsConstants.autistic));
+  }
+
+  List<int> _bearAnswers = [];
+
+  List<int> get getBearAnswers => _bearAnswers;
+
+  set setBearAnswers(int value) {
+    emit(SetAndGetValueLoading());
+    _bearAnswers.add(value);
+    emit(SetAndGetValueLoaded());
   }
 }

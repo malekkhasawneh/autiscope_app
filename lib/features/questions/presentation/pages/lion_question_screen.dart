@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
@@ -24,11 +26,17 @@ class _LionQuestionScreenState extends State<LionQuestionScreen> {
     super.initState();
   }
 
+
+  bool _isCompleted = false;
+
   void addListener() {
     AudioPlayerHelper.player.positionStream.listen((position) {
       if (position == AudioPlayerHelper.player.duration!) {
         log('======================================== True');
-        QuestionsCubit.get(context).recorder();
+        if (!_isCompleted) {
+          QuestionsCubit.get(context).recorder();
+        }
+        _isCompleted = true;
       }
     });
   }
@@ -46,8 +54,8 @@ class _LionQuestionScreenState extends State<LionQuestionScreen> {
       },
       child: Scaffold(
         body: Center(
-          child: Image.asset(
-            Images.lionImage,
+          child: Image.file(
+            File(Images.fileImagesPath + Constants.lionImage),
             fit: BoxFit.fill,
           ),
         ),

@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
+import 'package:autiscope_app/core/resources/contants.dart';
+import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -16,7 +20,7 @@ class _FollowTheUrchinScreenState extends State<FollowTheUrchinScreen> {
   @override
   void initState() {
     AudioPlayerHelper.playAudio(path: Audios.followTheUrchin);
-    _controller = VideoPlayerController.asset(VideosNames.urchinVideo)
+    _controller = VideoPlayerController.file(File(Images.fileImagesPath + Constants.urchinVideo))
       ..initialize().then((_) {
         setState(() {});
       })

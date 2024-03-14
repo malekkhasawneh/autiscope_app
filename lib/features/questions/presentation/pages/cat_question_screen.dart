@@ -26,11 +26,16 @@ class _CatQuestionScreenState extends State<CatQuestionScreen> {
     super.initState();
   }
 
+  bool _isCompleted = false;
+
   void addListener() {
     AudioPlayerHelper.player.positionStream.listen((position) {
       if (position == AudioPlayerHelper.player.duration!) {
         log('======================================== True');
-        QuestionsCubit.get(context).recorder();
+        if (!_isCompleted) {
+          QuestionsCubit.get(context).recorder();
+        }
+        _isCompleted = true;
       }
     });
   }

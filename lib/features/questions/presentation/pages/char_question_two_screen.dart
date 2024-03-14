@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:autiscope_app/core/resources/contants.dart';
+import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +16,15 @@ class CharacterQuestionTwoScreen extends StatefulWidget {
       _CharacterQuestionTwoScreenState();
 }
 
-class _CharacterQuestionTwoScreenState
-    extends State<CharacterQuestionTwoScreen> {
+class _CharacterQuestionTwoScreenState extends State<CharacterQuestionTwoScreen> {
   late VideoPlayerController _controller;
 
   @override
   void initState() {
     QuestionsCubit.get(context)
         .initModel(model: ModelsConstants.questionOneModel);
-    _controller = VideoPlayerController.asset('video/char_question_two.mp4')
+    _controller = VideoPlayerController.file(
+        File(Images.fileImagesPath + Constants.secondQuestionVideo))
       ..initialize().then((_) {
         setState(() {});
       })
@@ -32,9 +36,14 @@ class _CharacterQuestionTwoScreenState
     super.initState();
   }
 
+  bool _isCompleted = false;
+
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      QuestionsCubit.get(context).recorder();
+      if (!_isCompleted) {
+        QuestionsCubit.get(context).recorder();
+      }
+      _isCompleted = true;
     }
   }
 
@@ -51,19 +60,19 @@ class _CharacterQuestionTwoScreenState
       child: Scaffold(
         body: _controller.value.isInitialized
             ? Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _controller.value.size.width,
-                      height: _controller.value.size.height,
-                      child: VideoPlayer(_controller),
-                    ),
-                  ),
-                ),
-              )
+          child: SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.7,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: _controller.value.size.width,
+                height: _controller.value.size.height,
+                child: VideoPlayer(_controller),
+              ),
+            ),
+          ),
+        )
             : const SizedBox(),
       ),
     );

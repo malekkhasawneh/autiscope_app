@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:autiscope_app/core/resources/contants.dart';
+import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +22,8 @@ class _CharacterQuestionOneScreenState
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset('video/char_question_one.mp4')
+    QuestionsCubit.get(context).initSpeechToText();
+    _controller = VideoPlayerController.file(File(Images.fileImagesPath + Constants.firstQuestionVideo))
       ..initialize().then((_) {
         setState(() {});
       })
@@ -32,7 +37,8 @@ class _CharacterQuestionOneScreenState
 
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      Navigator.pushReplacementNamed(context, Routes.charQuestionTwoScreen);
+      Navigator.pushReplacementNamed(
+          context, Routes.charQuestionTwoScreen);
     }
   }
 

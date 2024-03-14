@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:autiscope_app/core/resources/contants.dart';
+import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +24,7 @@ class _CharacterQuestionThreeScreenState
   void initState() {
     QuestionsCubit.get(context)
         .initModel(model: ModelsConstants.questionThreeModel);
-    _controller = VideoPlayerController.asset('video/char_question_four.mp4')
+    _controller = VideoPlayerController.file(File(Images.fileImagesPath + Constants.fourthQuestionVideo))
       ..initialize().then((_) {
         setState(() {});
       })
@@ -31,10 +35,14 @@ class _CharacterQuestionThreeScreenState
     });
     super.initState();
   }
+  bool _isCompleted = false;
 
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      QuestionsCubit.get(context).recorder();
+      if (!_isCompleted) {
+        QuestionsCubit.get(context).recorder();
+      }
+      _isCompleted = true;
     }
   }
 

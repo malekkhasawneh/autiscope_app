@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:autiscope_app/core/resources/images.dart';
+import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter/material.dart';
 
 class FindDifferenceScreen extends StatelessWidget {
@@ -9,44 +7,120 @@ class FindDifferenceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bearImage),
-            fit: BoxFit.fill,
-          ),
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          alignment: Alignment.topCenter,
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Positioned(
-              top: 152,
-              right: 195,
-              child: GestureDetector(
-                onTap: () {
-                  log('======================================= 1');
-                },
-                child: Container(
-                  color: Colors.red,
-                  width: 25,
-                  height: 25,
+            SizedBox(
+              height: MediaQuery.of(context).padding.top,
+            ),
+            Container(
+              width: 300,
+              height: 300,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/bear_image_two.png'),
                 ),
               ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform.translate(
+                    offset: const Offset(-16, -55),
+                    child: GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 1;
+                      },
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(18, 83),
+                    child: GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 2;
+                      },
+                      child: Container(
+                        width: 55,
+                        height: 62,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(49, 17),
+                    child:GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 3;
+                      },
+                      child: Container(
+                        width: 42,
+                        height: 47,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Positioned(
-              top: 445,
-              right: 183,
-              child: GestureDetector(
-                onTap: () {
-                  log('======================================= 1');
-                },
-                child: Container(
-                  color: Colors.red,
-                  width: 25,
-                  height: 25,
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              width: 300,
+              height: 300,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/bear_image_one.png'),
                 ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform.translate(
+                    offset: const Offset(-16, -55),
+                    child: GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 1;
+                      },
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(18, 83),
+                    child: GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 2;
+                      },
+                      child: Container(
+                        width: 55,
+                        height: 62,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(49, 17),
+                    child:GestureDetector(
+                      onTap: (){
+                        QuestionsCubit.get(context).setBearAnswers = 3;
+                      },
+                      child: Container(
+                        width: 42,
+                        height: 47,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

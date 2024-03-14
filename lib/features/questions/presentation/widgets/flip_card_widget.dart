@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +38,7 @@ class FlipCardWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               image:
-                  DecorationImage(image: AssetImage(image), fit: BoxFit.fill),
+                  DecorationImage(image: FileImage(File(image)), fit: BoxFit.fill),
             ),
           ),
         ),

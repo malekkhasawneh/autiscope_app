@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
@@ -29,7 +30,10 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
         listener: (context, state) async {
       if (QuestionsCubit.get(context).getSelectedCardsList.length == 4) {
         await Future.delayed(const Duration(seconds: 2))
-            .then((_) => log('========================================= Done'));
+            .then((_) {
+              log('========================================= Done');
+              Navigator.pushReplacementNamed(context, Routes.findDifferenceScreen);
+            });
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -51,7 +55,7 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
                     }
                   },
                   controller: QuestionsCubit.get(context).card1,
-                  image: Images.strawberryImage,
+                  image: Images.fileImagesPath + Constants.strawberryImage,
                   flip: !QuestionsCubit.get(context)
                           .getSelectedCardsList
                           .contains(4) &&
@@ -68,7 +72,7 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
                     }
                   },
                   controller: QuestionsCubit.get(context).card2,
-                  image: Images.appleImage,
+                  image:Images.fileImagesPath + Constants.appleImage,
                   flip: !QuestionsCubit.get(context)
                           .getSelectedCardsList
                           .contains(4) &&
@@ -94,7 +98,7 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
                     }
                   },
                   controller: QuestionsCubit.get(context).card3,
-                  image: Images.appleImage,
+                  image: Images.fileImagesPath + Constants.appleImage,
                   flip: !QuestionsCubit.get(context)
                           .getSelectedCardsList
                           .contains(4) &&
@@ -111,7 +115,7 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
                     }
                   },
                   controller: QuestionsCubit.get(context).card4,
-                  image: Images.strawberryImage,
+                  image: Images.fileImagesPath + Constants.strawberryImage,
                   flip: !QuestionsCubit.get(context)
                           .getSelectedCardsList
                           .contains(4) &&

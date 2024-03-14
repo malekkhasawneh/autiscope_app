@@ -1,3 +1,4 @@
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/core/widgets/custom_text_field_widget.dart';
@@ -83,8 +84,8 @@ class _AddChildScreenState extends State<AddChildScreen> {
                         padding: EdgeInsets.only(top: 150),
                         child: Center(
                             child: CircularProgressIndicator(
-                          color: Colors.blue,
-                        )),
+                              color: Colors.blue,
+                            )),
                       ),
                     ] else ...[
                       SingleChildScrollView(
@@ -94,7 +95,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 35),
+                              const EdgeInsets.symmetric(horizontal: 35),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -107,7 +108,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                                   CustomTextFieldWidget(
                                     title: Strings.childNicName,
                                     controller:
-                                        AddChildCubit.get(context).nickName,
+                                    AddChildCubit.get(context).nickName,
                                     check: AddChildCubit.get(context).getCheck,
                                     keyBoardType: TextInputType.name,
                                   ),
@@ -127,56 +128,66 @@ class _AddChildScreenState extends State<AddChildScreen> {
                             ),
                             AddChildCubit.get(context).children.isNotEmpty
                                 ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 40,
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsetsDirectional.only(
-                                              start: 25),
-                                          child: Text(
-                                            Strings.children,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        ...AddChildCubit.get(context)
-                                            .children
-                                            .map((child) {
-                                          return ListTile(
-                                            dense: true,
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  Routes.parentQuestionsScreen);
-                                            },
-                                            leading: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              child: Image.asset(
-                                                Images.boyLogo,
-                                                fit: BoxFit.fill,
-                                                width: 50,
-                                                height: 40,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            title: Text(child.name),
-                                            subtitle: Text(child.nickName),
-                                          );
-                                        })
-                                      ],
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                        start: 25),
+                                    child: Text(
+                                      Strings.children,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  )
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ...AddChildCubit.get(context)
+                                      .children
+                                      .map((child) {
+                                    return ListTile(
+                                      dense: true,
+                                      onTap: () {
+                                              if (child.age ==
+                                                  Constants.oneThreeAgeGroup) {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    Routes
+                                                        .parentQuestionsScreen);
+                                              } else {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    Routes
+                                                        .charQuestionOneScreen);
+                                              }
+                                            },
+                                      leading: ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(100),
+                                        child: Image.asset(
+                                          Images.boyLogo,
+                                          fit: BoxFit.fill,
+                                          width: 50,
+                                          height: 40,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      title: Text(child.name),
+                                      subtitle: Text(child.nickName),
+                                    );
+                                  })
+                                ],
+                              ),
+                            )
                                 : const SizedBox()
                           ],
                         ),

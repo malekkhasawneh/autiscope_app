@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.backgroundColor,
         ),
         onGenerateRoute: RouteGenerator.generateRoute,
-        initialRoute: Routes.catQuestionScreen,
+        initialRoute: Routes.findDifferenceScreen,
         locale: const Locale('ar', 'JO'),
       ),
     );

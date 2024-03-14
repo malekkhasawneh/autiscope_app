@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
 import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
@@ -26,7 +29,9 @@ class _MatchingQuestionScreenState extends State<MatchingQuestionScreen> {
       listener: (context, state) {
         if(state is ModelAnswerLoaded){
           if(state.answer.isNotEmpty){
-            Navigator.pushReplacementNamed(context, Routes.catQuestionScreen);
+            Future.delayed(const Duration(seconds: 1)).then((_) =>
+                Navigator.pushReplacementNamed(
+                    context, Routes.catQuestionScreen));
           }
         }
       },
@@ -37,9 +42,11 @@ class _MatchingQuestionScreenState extends State<MatchingQuestionScreen> {
               right: 2,
               top: 10,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Images.motherImage), fit: BoxFit.cover),
+                      image: FileImage(
+                          File(Images.fileImagesPath + Constants.motherImage)),
+                      fit: BoxFit.cover),
                 ),
                 width: 100,
                 height: 200,
@@ -49,9 +56,11 @@ class _MatchingQuestionScreenState extends State<MatchingQuestionScreen> {
               bottom: 10,
               left: 2,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Images.childImage), fit: BoxFit.cover),
+                      image: FileImage(
+                          File(Images.fileImagesPath + Constants.childImage)),
+                      fit: BoxFit.cover),
                 ),
                 width: 100,
                 height: 200,
