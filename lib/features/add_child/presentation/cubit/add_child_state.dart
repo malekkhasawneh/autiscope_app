@@ -51,3 +51,7 @@ class SetAndGetLoaded extends AddChildState {
   @override
   List<Object> get props => [];
 }
+class SaveVideoLoaded extends AddChildState {
+  @override
+  List<Object> get props => [];
+}

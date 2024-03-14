@@ -38,6 +38,7 @@ dependencies:
   tflite_audio: ^0.3.0
   flutter_flip_card: ^0.0.5
   speech_to_text: ^6.6.0
+  firebase_storage: ^11.6.10
 
 dev_dependencies:
   flutter_test:

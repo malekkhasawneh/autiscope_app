@@ -44,7 +44,7 @@ class _CharacterQuestionThreeScreenState
       listener: (context, state) {
         if (state is ModelAnswerLoaded) {
           if (state.answer.isNotEmpty) {
-            Navigator.pushReplacementNamed(context, Routes.questionTipScreen);
+            Navigator.pushReplacementNamed(context, Routes.followTheUrchinScreen);
           }
         }
       },

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
 import 'package:autiscope_app/core/resources/images.dart';
+import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:autiscope_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:autiscope_app/features/questions/presentation/widgets/flip_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class FlipQuestionScreen extends StatefulWidget {
 class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
   @override
   void initState() {
+    AudioPlayerHelper.playAudio(path: Audios.chooseImages);
     QuestionsCubit.get(context).flipImagesTimer();
     super.initState();
   }

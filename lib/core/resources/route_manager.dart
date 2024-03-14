@@ -16,6 +16,10 @@ class Routes {
   static const String flipQuestionScreen = "/FlipQuestionScreen";
   static const String questionTipScreen = '/QuestionTipScreen';
   static const String matchingQuestionScreen = "/matchingQuestionScreen";
+  static const String followTheUrchinScreen = "/followTheUrchinScreen";
+  static const String catQuestionScreen = "/CatQuestionScreen";
+  static const String lionQuestionScreen = "/LionQuestionScreen";
+  static const String findDifferenceScreen = "/FindDifferenceScreen";
 }
 
 class RouteGenerator {
@@ -95,6 +99,26 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => MatchingQuestionScreen(),
           settings: const RouteSettings(name: Routes.matchingQuestionScreen),
+        );
+      case Routes.followTheUrchinScreen:
+        return MaterialPageRoute(
+          builder: (_) => const FollowTheUrchinScreen(),
+          settings: const RouteSettings(name: Routes.followTheUrchinScreen),
+        );
+      case Routes.catQuestionScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CatQuestionScreen(),
+          settings: const RouteSettings(name: Routes.catQuestionScreen),
+        );
+      case Routes.lionQuestionScreen:
+        return MaterialPageRoute(
+          builder: (_) => const LionQuestionScreen(),
+          settings: const RouteSettings(name: Routes.lionQuestionScreen),
+        );
+      case Routes.findDifferenceScreen:
+        return MaterialPageRoute(
+          builder: (_) => const FindDifferenceScreen(),
+          settings: const RouteSettings(name: Routes.findDifferenceScreen),
         );
       default:
         return unDefinedRoute();

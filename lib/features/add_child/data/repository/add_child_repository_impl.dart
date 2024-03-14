@@ -18,9 +18,9 @@ class AddChildRepositoryImpl implements AddChildRepository {
   @override
   Future<Either<Failures, bool>> addChild(
       {required String userId,
-      required  String name,
-      required  String nickName,
-      required  String age        }) async {
+      required String name,
+      required String nickName,
+      required String age}) async {
     if (await networkInfo.checkConnection()) {
       try {
         final response = await remoteDataSource.addChild(
@@ -42,6 +42,22 @@ class AddChildRepositoryImpl implements AddChildRepository {
         final response = await remoteDataSource.getChildren(
           userId: userId,
         );
+        return Right(response);
+      } on ServerException {
+        return const Left(ServerFailure(failure: 'server error'));
+      }
+    } else {
+      return const Left(InternetFailure(failure: 'no internet'));
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> downloadVideo(
+      {required String fileName}) async {
+    if (await networkInfo.checkConnection()) {
+      try {
+        final response =
+            await remoteDataSource.downloadVideo(fileName: fileName);
         return Right(response);
       } on ServerException {
         return const Left(ServerFailure(failure: 'server error'));

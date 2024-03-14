@@ -5,6 +5,7 @@ import 'package:autiscope_app/features/splash/domain/usecase/set_is_first_time_u
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'splash_state.dart';
 
@@ -73,5 +74,10 @@ class SplashCubit extends Cubit<SplashState> {
     } catch (error) {
       emit(SplashError(error: error.toString()));
     }
+  }
+
+  Future<void> requestPermissions() async {
+    await Permission.camera.request();
+    await Permission.microphone.request();
   }
 }

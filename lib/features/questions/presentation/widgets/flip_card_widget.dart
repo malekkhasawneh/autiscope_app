@@ -34,6 +34,7 @@ class FlipCardWidget extends StatelessWidget {
             width: 115,
             height: 115,
             decoration: BoxDecoration(
+              color: Colors.white,
               image:
                   DecorationImage(image: AssetImage(image), fit: BoxFit.fill),
             ),

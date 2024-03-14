@@ -18,7 +18,6 @@ class _CharacterQuestionOneScreenState
 
   @override
   void initState() {
-    QuestionsCubit.get(context).initSpeechToText();
     _controller = VideoPlayerController.asset('video/char_question_one.mp4')
       ..initialize().then((_) {
         setState(() {});
@@ -33,7 +32,7 @@ class _CharacterQuestionOneScreenState
 
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      QuestionsCubit.get(context).startListen();
+      Navigator.pushReplacementNamed(context, Routes.charQuestionTwoScreen);
     }
   }
 
@@ -43,7 +42,9 @@ class _CharacterQuestionOneScreenState
       listener: (context, state) {
         if (state is ModelAnswerLoaded) {
           if (state.answer.isNotEmpty) {
-            Navigator.pushReplacementNamed(context, Routes.charQuestionTwoScreen);
+            QuestionsCubit.get(context).startSpeechListen();
+            Navigator.pushReplacementNamed(
+                context, Routes.charQuestionTwoScreen);
           }
         }
       },

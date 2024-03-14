@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "170308958115",
-    "project_id": "autiscope-app",
-    "storage_bucket": "autiscope-app.appspot.com"
+    "project_number": "892660477546",
+    "project_id": "autiscope-app-dad35",
+    "storage_bucket": "autiscope-app-dad35.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:170308958115:android:b4dafec374c82b8acb4c16",
+        "mobilesdk_app_id": "1:892660477546:android:e3143d4ebd7f9a8bf2a413",
         "android_client_info": {
           "package_name": "com.malek.autiscope_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDI9N59WJ7UERuS3VzMa5sP7QlGghLilfI"
+          "current_key": "AIzaSyAnzY8gXAgyU08JH3EaLcYj3K-BjJV18Ds"
         }
       ],
       "services": {

@@ -21,10 +21,11 @@ void main() async {
   } catch (error) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: 'AIzaSyDI9N59WJ7UERuS3VzMa5sP7QlGghLilfI',
-            appId: '1:170308958115:android:b4dafec374c82b8acb4c16',
+            apiKey: 'AIzaSyAnzY8gXAgyU08JH3EaLcYj3K-BjJV18Ds',
+            appId: '1:892660477546:android:e3143d4ebd7f9a8bf2a413',
             messagingSenderId: '',
-            projectId: 'autiscope-app'));
+            projectId: 'autiscope-app-dad35',
+            storageBucket: "autiscope-app-dad35.appspot.com"));
   }
   await di.init();
   runApp(const MyApp());
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.backgroundColor,
         ),
         onGenerateRoute: RouteGenerator.generateRoute,
-        initialRoute: Routes.charQuestionOneScreen,
+        initialRoute: Routes.catQuestionScreen,
         locale: const Locale('ar', 'JO'),
       ),
     );

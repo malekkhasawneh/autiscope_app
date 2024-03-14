@@ -9,6 +9,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 final sl = GetIt.instance;
 
@@ -30,4 +31,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton(() => InternetConnectionChecker());
+  await SpeechToText().initialize();
 }

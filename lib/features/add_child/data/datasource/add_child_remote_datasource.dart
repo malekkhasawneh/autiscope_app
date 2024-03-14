@@ -1,8 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:autiscope_app/core/errors/exceptions.dart';
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/features/add_child/data/model/child_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 
 abstract class AddChildRemoteDataSource {
   Future<bool> addChild(
@@ -12,6 +17,8 @@ abstract class AddChildRemoteDataSource {
       required String age});
 
   Future<List<ChildModel>> getChildren({required String userId});
+
+  Future<void> downloadVideo({required String fileName});
 }
 
 class AddChildRemoteDataSourceImpl implements AddChildRemoteDataSource {
@@ -60,6 +67,28 @@ class AddChildRemoteDataSourceImpl implements AddChildRemoteDataSource {
       }
 
       return childModels;
+    } on Exception {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<void> downloadVideo({required String fileName}) async {
+    try {
+      Reference reference =
+          FirebaseStorage.instance.ref().child(fileName);
+      String downloadUrl = await reference.getDownloadURL();
+      Directory appDocDir = await getTemporaryDirectory();
+      String filePath = '${appDocDir.path}/$fileName';
+      File file = File(filePath);
+      if (!await file.exists()) {
+        log(
+            '=========================== Download Started');
+        await Dio().download(downloadUrl, filePath).whenComplete(() => log(
+            '=========================== The video downloaded successfully'));
+      } else {
+        log('=========================== The video already exist');
+      }
     } on Exception {
       throw ServerException();
     }

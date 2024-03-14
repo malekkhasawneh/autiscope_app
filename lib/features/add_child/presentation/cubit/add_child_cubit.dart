@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/features/add_child/data/model/child_model.dart';
 import 'package:autiscope_app/features/add_child/domain/usecase/add_child_usecase.dart';
+import 'package:autiscope_app/features/add_child/domain/usecase/download_video_usecase.dart';
 import 'package:autiscope_app/features/add_child/domain/usecase/get_children_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,11 +19,12 @@ class AddChildCubit extends Cubit<AddChildState> {
   AddChildCubit({
     required this.addChildUseCase,
     required this.getChildrenUseCase,
+    required this.downloadVideoUseCase,
   }) : super(AddChildInitial());
 
   final AddChildUseCase addChildUseCase;
   final GetChildrenUseCase getChildrenUseCase;
-
+  final DownloadVideoUseCase downloadVideoUseCase;
   TextEditingController name = TextEditingController();
   TextEditingController nickName = TextEditingController();
   bool _firstCheckBox = false;
@@ -92,6 +95,29 @@ class AddChildCubit extends Cubit<AddChildState> {
       });
     } catch (error) {
       emit(AddChildError(failure: error.toString()));
+    }
+  }
+
+  Future<void> downloadVideo({required String fileName}) async {
+    try {
+      final response = await downloadVideoUseCase(
+          DownloadVideoUseCaseParams(fileName: fileName));
+      response.fold(
+          (failure) => emit(AddChildError(
+                failure: failure.failure,
+              )), (success) async {
+        log('=============================== Success');
+
+        emit(SaveVideoLoaded());
+      });
+    } catch (error) {
+      emit(AddChildError(failure: error.toString()));
+    }
+  }
+
+  Future<void> downloadMedia() async {
+    for (var media in Constants.filesList) {
+      await downloadVideo(fileName: media);
     }
   }
 

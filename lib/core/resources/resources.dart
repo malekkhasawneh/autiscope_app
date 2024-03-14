@@ -1,4 +1,5 @@
 import 'package:autiscope_app/features/add_child/presentation/page/add_child.dart';
+import 'package:autiscope_app/features/questions/presentation/pages/cat_question_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/char_question_four_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/char_question_one_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/char_question_three_screen.dart';
@@ -6,7 +7,10 @@ import 'package:autiscope_app/features/questions/presentation/pages/char_questio
 import 'package:autiscope_app/features/forget_password/presentation/page/forget_password_screen.dart';
 import 'package:autiscope_app/features/login/presentation/page/login_screen.dart';
 import 'package:autiscope_app/features/parent_questions/presentation/page/parent_questions_screen.dart';
+import 'package:autiscope_app/features/questions/presentation/pages/find_difference_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/flip_question_screen.dart';
+import 'package:autiscope_app/features/questions/presentation/pages/follow_the_urchin_screen.dart';
+import 'package:autiscope_app/features/questions/presentation/pages/lion_question_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/matching_question_screen.dart';
 import 'package:autiscope_app/features/questions/presentation/pages/question_tip_screen.dart';
 import 'package:autiscope_app/features/signup/presentation/page/sign_up_screen.dart';
@@ -22,3 +26,5 @@ part 'route_manager.dart';
 part 'strings.dart';
 part 'app_colors.dart';
 part 'models_constants.dart';
+part 'videos_names.dart';
+part 'audios.dart';

@@ -46,9 +46,11 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   List<String> answers = [];
 
+  String childName = '';
+
   Future<void> flipImagesTimer() async {
     emit(SetAndGetValueLoading());
-    await Future.delayed(const Duration(seconds: 15)).then((_) {
+    await Future.delayed(const Duration(seconds: 10)).then((_) {
       card1.flipcard();
       card2.flipcard();
       card3.flipcard();
@@ -97,19 +99,39 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     TfliteAudio.stopAudioRecognition();
   }
 
-  Future<void> initSpeechToText() async {
+  Future<void> startSpeechListen() async {
     emit(SetAndGetValueLoading());
-    await SpeechToText().initialize();
+    await SpeechToText().listen(
+        onResult: _onSpeechResult,
+        listenFor: const Duration(seconds: 5),
+        localeId: 'ar');
     emit(SetAndGetValueLoaded());
   }
 
-  Future<void> startListen() async {
-    emit(SetAndGetValueLoading());
-    await SpeechToText().listen(onResult: _onSpeechResult,listenFor: const Duration(seconds: 3));
-    emit(SetAndGetValueLoaded());
+  Future<void> stopSpeechListen() async {
+    await SpeechToText().stop();
+    await SpeechToText().cancel();
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    log('================================================= Here ${result.recognizedWords}');
+    log('================================ result ${result.recognizedWords.contains(childName)}');
+    if (result.recognizedWords.contains(childName)) {
+      answers.add(ModelsConstants.autistic);
+    } else {
+      answers.add(ModelsConstants.nonAutistic);
+    }
+    emit(ModelAnswerLoaded(answer: answers.first));
+  }
+
+  Future<void> checkMatchingQuestion(bool answer) async {
+    emit(CharQuestionsLoading());
+    if (answer) {
+      answers.add(ModelsConstants.nonAutistic);
+    } else {
+      answers.add(ModelsConstants.autistic);
+    }
+    emit(ModelAnswerLoaded(
+        answer:
+            answer ? ModelsConstants.nonAutistic : ModelsConstants.autistic));
   }
 }

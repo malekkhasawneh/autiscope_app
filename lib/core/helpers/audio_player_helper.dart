@@ -22,10 +22,6 @@ class AudioPlayerHelper {
     await player.stop();
   }
 
-  static Future<void> getPosition() async {
-    player.positionStream.listen((position) {
-      log('============================== voice position ${position.inSeconds}');
-    });
-  }
+
 
 }

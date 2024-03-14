@@ -11,4 +11,6 @@ abstract class AddChildRepository {
 
   Future<Either<Failures, List<ChildModel>>> getChildren(
       {required String userId});
+
+  Future<Either<Failures, void>> downloadVideo({required String fileName});
 }

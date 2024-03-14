@@ -1,3 +1,5 @@
+import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
+import 'package:autiscope_app/core/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,16 +15,24 @@ class _FollowTheUrchinScreenState extends State<FollowTheUrchinScreen> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset('video/urchin_video.mp4')
+    AudioPlayerHelper.playAudio(path: Audios.followTheUrchin);
+    _controller = VideoPlayerController.asset(VideosNames.urchinVideo)
       ..initialize().then((_) {
         setState(() {});
-      });
+      })
+      ..addListener(_videoListener);
     Future.delayed(const Duration(seconds: 1)).then((_) {
       _controller.play();
       _controller.setLooping(false);
       _controller.setVolume(0.0);
     });
     super.initState();
+  }
+
+  Future<void> _videoListener() async {
+    if (_controller.value.position >= _controller.value.duration) {
+      Navigator.pushReplacementNamed(context, Routes.matchingQuestionScreen);
+    }
   }
 
   @override
@@ -33,16 +43,9 @@ class _FollowTheUrchinScreenState extends State<FollowTheUrchinScreen> {
               child: SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.7,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: _controller.value.size.width,
-                    height: _controller.value.size.height,
-                    child: VideoPlayer(_controller),
-                  ),
-                ),
-              ),
-            )
+                child: VideoPlayer(_controller),
+        ),
+      )
           : const SizedBox(),
     );
   }
