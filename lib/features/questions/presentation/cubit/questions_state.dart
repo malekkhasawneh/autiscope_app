@@ -37,6 +37,11 @@ class ModelAnswerLoaded extends QuestionsState {
   List<Object> get props => [answer];
 }
 
+class BearGameFinishedLoaded extends QuestionsState {
+  @override
+  List<Object> get props => [];
+}
+
 //Set And Get Value States
 class SetAndGetValueLoading extends QuestionsState {
   @override

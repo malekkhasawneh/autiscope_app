@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:autiscope_app/core/helpers/audio_player_helper.dart';
 import 'package:autiscope_app/core/resources/contants.dart';
 import 'package:autiscope_app/core/resources/images.dart';
@@ -24,16 +22,20 @@ class _FlipQuestionScreenState extends State<FlipQuestionScreen> {
     super.initState();
   }
 
+  bool _isAdded = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<QuestionsCubit, QuestionsState>(
         listener: (context, state) async {
       if (QuestionsCubit.get(context).getSelectedCardsList.length == 4) {
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) {
-              log('========================================= Done');
-              Navigator.pushReplacementNamed(context, Routes.findDifferenceScreen);
-            });
+        await Future.delayed(const Duration(seconds: 2)).then((_) {
+          if (!_isAdded) {
+            QuestionsCubit.get(context).addFlipResult();
+          }
+          _isAdded = true;
+          Navigator.pushReplacementNamed(context, Routes.findDifferenceScreen);
+        });
       }
     }, builder: (context, state) {
       return Scaffold(

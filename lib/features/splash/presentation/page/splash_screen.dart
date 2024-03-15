@@ -27,20 +27,20 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) async {
-        // if (state is SplashLoaded) {
-        //   await Future.delayed(const Duration(seconds: 5)).then((_) async {
-        //     if (SplashCubit.get(context).isFirstTime) {
-        //       Navigator.pushNamed(context, Routes.tipsScreen);
-        //     } else {
-        //       if (SplashCubit.get(context).isLogin) {
-        //         await LoginCubit.get(context).getUserInfo().then(
-        //             (_) => Navigator.pushNamed(context, Routes.addChildScreen));
-        //       } else {
-        //         Navigator.pushNamed(context, Routes.loginScreen);
-        //       }
-        //     }
-        //   });
-        // }
+        if (state is SplashLoaded) {
+          await Future.delayed(const Duration(seconds: 5)).then((_) async {
+            if (SplashCubit.get(context).isFirstTime) {
+              Navigator.pushNamed(context, Routes.tipsScreen);
+            } else {
+              if (SplashCubit.get(context).isLogin) {
+                await LoginCubit.get(context).getUserInfo().then(
+                    (_) => Navigator.pushNamed(context, Routes.addChildScreen));
+              } else {
+                Navigator.pushNamed(context, Routes.loginScreen);
+              }
+            }
+          });
+        }
       },
       builder: (context, state) {
         return Scaffold(

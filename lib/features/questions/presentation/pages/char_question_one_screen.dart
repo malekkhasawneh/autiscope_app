@@ -22,7 +22,6 @@ class _CharacterQuestionOneScreenState
 
   @override
   void initState() {
-    QuestionsCubit.get(context).initSpeechToText();
     _controller = VideoPlayerController.file(File(Images.fileImagesPath + Constants.firstQuestionVideo))
       ..initialize().then((_) {
         setState(() {});
@@ -37,8 +36,10 @@ class _CharacterQuestionOneScreenState
 
   Future<void> _videoListener() async {
     if (_controller.value.position >= _controller.value.duration) {
-      Navigator.pushReplacementNamed(
-          context, Routes.charQuestionTwoScreen);
+      QuestionsCubit.get(context).initSpeechToText().then((_) {
+        QuestionsCubit.get(context).childNameTimer();
+        QuestionsCubit.get(context).startSpeechListen();
+      });
     }
   }
 

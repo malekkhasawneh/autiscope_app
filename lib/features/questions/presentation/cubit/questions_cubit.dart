@@ -34,7 +34,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   bool canFlipImage = false;
 
-  List<int> _selectedCardsList = [];
+  final List<int> _selectedCardsList = [];
 
   List<int> get getSelectedCardsList => _selectedCardsList;
 
@@ -46,7 +46,8 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   List<String> answers = [];
 
-  String childName = '';
+  String childName = 'childName';
+  String nicName = 'nicName';
 
   Future<void> flipImagesTimer() async {
     emit(SetAndGetValueLoading());
@@ -105,10 +106,20 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   Future<void> startSpeechListen() async {
     emit(SetAndGetValueLoading());
+    final options = SpeechListenOptions(
+        onDevice: false,
+        listenMode: ListenMode.confirmation,
+        cancelOnError: true,
+        partialResults: true,
+        autoPunctuation: true,
+        enableHapticFeedback: true);
     await SpeechToText().listen(
-        onResult: _onSpeechResult,
-        listenFor: const Duration(seconds: 15),
-        localeId: 'ar');
+      onResult: _onSpeechResult,
+      listenFor: const Duration(seconds: 15),
+      pauseFor: const Duration(seconds: 15),
+      localeId: 'ar_JO',
+      listenOptions: options,
+    );
     emit(SetAndGetValueLoaded());
   }
 
@@ -117,14 +128,25 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     await SpeechToText().cancel();
   }
 
+  String speechResult = '';
+
   void _onSpeechResult(SpeechRecognitionResult result) {
-    log('================================ result ${result.recognizedWords.contains(childName)}');
-    if (result.recognizedWords.contains(childName)) {
-      answers.add(ModelsConstants.autistic);
-    } else {
-      answers.add(ModelsConstants.nonAutistic);
-    }
-    emit(ModelAnswerLoaded(answer: answers.first));
+    speechResult = result.recognizedWords;
+  }
+
+  Future<void> childNameTimer() async {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (timer.tick == 10) {
+        timer.cancel();
+        if (speechResult.contains(childName) ||
+            speechResult.contains(nicName)) {
+          answers.add(ModelsConstants.nonAutistic);
+        } else {
+          answers.add(ModelsConstants.autistic);
+        }
+        emit(ModelAnswerLoaded(answer: answers.first));
+      }
+    });
   }
 
   Future<void> checkMatchingQuestion(bool answer) async {
@@ -139,7 +161,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
             answer ? ModelsConstants.nonAutistic : ModelsConstants.autistic));
   }
 
-  List<int> _bearAnswers = [];
+  final List<int> _bearAnswers = [];
 
   List<int> get getBearAnswers => _bearAnswers;
 
@@ -147,5 +169,55 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     emit(SetAndGetValueLoading());
     _bearAnswers.add(value);
     emit(SetAndGetValueLoaded());
+  }
+
+  Future<void> setBearQuestionTimer() async {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (timer.tick == 45 || _bearAnswers.length == 3) {
+        timer.cancel();
+        if (_bearAnswers.length == 3) {
+          answers.add(ModelsConstants.nonAutistic);
+        } else {
+          answers.add(ModelsConstants.autistic);
+        }
+        emit(BearGameFinishedLoaded());
+      }
+    });
+  }
+
+  Future<void> addFlipResult() async {
+    if ((_selectedCardsList.first == 1 && _selectedCardsList[1] == 4) ||
+        (_selectedCardsList.first == 2 && _selectedCardsList[1] == 3)) {
+      answers.add(ModelsConstants.nonAutistic);
+    } else {
+      answers.add(ModelsConstants.autistic);
+    }
+  }
+
+  double firstFourQuestionsResult() {
+    double result = 0;
+    if (answers[0].contains(ModelsConstants.autistic)) {
+      result += .25;
+    }
+    if (answers[1].contains(ModelsConstants.autistic)) {
+      result += .25;
+    }
+    if (answers[2].contains(ModelsConstants.autistic)) {
+      result += .25;
+    }
+    if (answers[3].contains(ModelsConstants.autistic)) {
+      result += .25;
+    }
+    return result * 0.30;
+  }
+
+  Future<double> sendResult() async {
+    double result = firstFourQuestionsResult() +
+        (answers[4] == ModelsConstants.autistic ? 0.10 : 0) +
+        (answers[5] == ModelsConstants.autistic ? 0.05 : 0) +
+        (answers[6] == ModelsConstants.autistic ? 0.05 : 0) +
+        (answers[7] == ModelsConstants.autistic ? 0.20 : 0) +
+        (answers[8] == ModelsConstants.autistic ? 0.30 : 0);
+    return result;
   }
 }

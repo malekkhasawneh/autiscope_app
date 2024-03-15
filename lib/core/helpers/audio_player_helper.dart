@@ -22,6 +22,12 @@ class AudioPlayerHelper {
     await player.stop();
   }
 
-
-
+  static Future<void> audioStream(Future<void> function) async {
+    player.positionStream.listen((position) {
+      if (position >= player.duration!) {
+        log('======================================= Done');
+        function;
+      }
+    });
+  }
 }

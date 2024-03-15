@@ -31,5 +31,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton(() => InternetConnectionChecker());
-  await SpeechToText().initialize();
 }
